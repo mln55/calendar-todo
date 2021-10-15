@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html xmlns:th="http://thymeleaf.org">
+<body>
+  <div id="right-nav">
+    <form id="testform">
+      <span>기간</span>
+      <select name="include">
+        <option value="none" th:selected="${sortInclude} eq 'none'" th:text="${currentYear}.${currentMonth}"></option>
+        <option value="next" th:selected="${sortInclude} eq 'next'" th:text="${currentYear}.${currentMonth} ~"></option>
+        <option value="prev" th:selected="${sortInclude} eq 'prev'" th:text="~ ${currentYear}.${currentMonth}"></option>
+        <option value="both" th:selected="${sortInclude} eq 'both'">전체 기간</option>
+      </select>
+      <span>정렬</span>
+      <select name="sort">
+        <option value="dday" th:selected="${sortSort} eq 'dday'">D-DAY</option>
+        <option value="begin" th:selected="${sortSort} eq 'begin'">시작 일</option>
+      </select>
+      <select name="method">
+        <option value="asc" th:selected="${sortMethod} eq 'asc'">오름차순</option>
+        <option value="desc" th:selected="${sortMethod} eq 'desc'">내림차순</option>
+      </select>
+      <label for="todo-ignore">종료된 일정 숨기기</label><input id="todo-ignore" name='ignore' type="checkbox" th:checked="${sortIgnore} eq 'on' || ${sortIgnore} eq null"/>
+      <input type="hidden" name="firstDate" th:value="${firstDate}">
+      <input type="hidden" name="lastDate" th:value="${lastDate}">
+      <input type="submit" value="검색"/>
+    </form>
+    <div th:if="${todoListSearch}"
+        th:each="tSrot : ${todoListSort}">
+      <span th:text="${tSort.title}${tSort.dDay} > 0 ? ' D-'+${tSort.dDay} : ${tSort.dDay} == 0 ? ' D-DAY' : ''"></span>
+      <br/>
+      <span th:text="${tSort.beginDate} ~ ${tSort.dueDate}"></span>
+      <br/><br/>
+    </div>
+  </div>
+</body>
+</html>

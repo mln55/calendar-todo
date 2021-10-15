@@ -1,0 +1,13 @@
+<!DOCTYPE html>
+<html xmlns:th="http://thymeleaf.org">
+
+<body>
+  <div th:if="${#lists.isEmpty(todoSearchList)}" class="result-tr">검색된 결과가 없습니다.</div>
+  <div th:unless="${#lists.isEmpty(todoSearchList)}" th:each="tSearch : ${todoSearchList}" class="result-tr">
+    <div class="result-td result-title" th:title="${tSearch.title}" th:text="${tSearch.title}"></div>
+    <div class="result-td result-begin" th:text="${tSearch.beginDate}"></div>
+    <div class="result-td result-due" th:text="${tSearch.dueDate}"></div>
+    <div class="result-td result-dday" th:text="${tSearch.dDay} > 0 ? ' D-' + ${tSearch.dDay} : (${tSearch.dDay} == 0 ? ' D-DAY' : '')"></div>
+  </div>
+</body>
+</html>

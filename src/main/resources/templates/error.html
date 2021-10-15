@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+  <title>ERROR : [[${status}]]</title>
+  <style>
+    #error-wrap {width: 650px; height: 300px; margin: 50px auto; padding: 5px;}
+
+    #error-info {text-align: center; margin-bottom: 20px;}
+
+    #redirect {text-align: center;}
+
+    button {width: 150px; height: 40px; border: none; font-size:1.25em; background-color: coral;}
+    button:hover {cursor: pointer; opacity: .8; }
+    a {text-decoration: none; color: black; font-weight: 700;}
+  </style>
+
+</head>
+<body>
+  <div id="error-wrap">
+    <div id="error-info">
+      <span>[[${timestamp}]]</span><br/><br/>
+      <span>알수없는 오류가 발생했습니다. 에러 코드 : [[${status}]]</span>
+    </div>
+    <div id="redirect">
+      <button><a target="_self" href="/">메인페이지</a></button>
+      &nbsp;&nbsp;&nbsp;
+      <button><a target="_self" href="/calendar/cal">일정관리</a></button>
+    </div>
+  </div>
+</body>
+</html>

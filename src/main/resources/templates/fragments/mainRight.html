@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html xmlns:th="http://thymeleaf.org">
+<body>
+  <div id="main-right">
+    <div id="right-wrap">
+      <form id="logout-form" th:action="@{/logout}" method="post">
+        <input id="logout-submit-btn" type="submit" value="로그아웃"/>
+      </form>
+      <div class="target-date"><span class="target-date-span" th:text="${#temporals.createDate(selectedDate, 'yyyy-M-d')}"></span></div>
+      <div class="todo-add-btn"><span>일정추가</span></div>
+      <div id="right-content-option">
+        <span id="option-displayed" onclick="optionClick(this);">일정</span>
+      </div>
+      <div id="right-content-wrap">
+        <div id="content-target-date"
+            th:with="currentDate = |${currentYear}-${currentMonth < 10 ? '0'.concat(currentMonth) : currentMonth
+            }-${currentDay < 10 ? '0'.concat(currentDay) : currentDay}|">
+          <div th:unless="${hasTodoList}">
+            <span>등록된 일정이 없습니다.</span>
+          </div>
+          <div th:if="${hasTodoList}">
+            <div th:each="todo, stat : ${todoList}"
+                th:if="${todo.beginDate} le ${currentDate} and ${todo.dueDate} ge ${currentDate}"
+                class="date-todo">
+              <div class="todo-title">
+                <div class="todo-label-div">
+                  <label class="todo-label" th:for="'todo'+${stat.count}" th:text="${todo.title}" th:title="${todo.title}"></label>
+                </div>
+                <div class="todo-color" th:style="|background-color: ${todo.color}; box-shadow: -1px 1px 5px ${todo.color};|" th:data-no="${todo.no}" th:data-hex="${todo.color}"></div>
+                <img class="todo-modify-btn" title="수정" alt="수정" th:src="@{/static/images/edit-button.svg}" th:data-no="${todo.no}" />
+                <img class="todo-delete-btn" title="삭제" alt="삭제" th:src="@{/static/images/close-black.svg}" th:data-no="${todo.no}"/>
+              </div>
+              <input class="todo-check" th:id="'todo'+${stat.count}" type="checkbox"/>
+              <div class="todo-info">
+                시작일 : <th:block th:text="${todo.beginDate}"/><br/>
+                종료일 : <th:block th:text="${todo.dueDate}"/><br/>
+                <th:block th:if="${todo.content ne ''}">내용 : <span th:title="${todo.content}" th:text="${todo.content}"></span><br/></th:block>
+                <span th:if="${todo.dDay gt 0}" th:text="'D-'+${todo.dDay}"></span>
+                <span th:if="${todo.dDay eq 0}">D-DAY</span>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div id="content-todo-search" class="content-option-hidden">
+          <form id="form-todo-search">
+            <select name="include">
+              <option value="none" th:text="${currentYear}+'.'+${currentMonth}"></option>
+              <option value="next" th:text="${currentYear}+'.'+${currentMonth}+' ~'"></option>
+              <option value="prev" th:text="'~ '+${currentYear}+'.'+${currentMonth}"></option>
+              <option value="both">전체 기간</option>
+            </select>
+            <label id="label-todo-ignore" for="todo-ignore">종료된 일정 감추기</label>
+            <input id="todo-ignore" name='ignore' type="checkbox" checked onclick="todoIgnoreCheck(this);"/>
+            <input type="hidden" name="firstDate" th:value="${firstDate}">
+            <input type="hidden" name="lastDate" th:value="${lastDate}">
+            <input id="todo-search-btn" type="button" onclick="searchTodoWithOption(this, 'none', 'asc', 'on');" value="검색"/>
+          </form>
+          <div id="todo-search-result">
+            <div class="result-tr">
+              <div class="result-th result-title" data-target="title" data-ignore="on" onclick="searchTodoWithOption(this, 'title', 'asc', 'on');">제목</div>
+              <div class="result-th result-begin" data-target="begin" data-ignore="on" onclick="searchTodoWithOption(this, 'begin', 'asc', 'on');">시작일</div>
+              <div class="result-th result-due" data-target="end" data-ignore="on" onclick="searchTodoWithOption(this, 'end', 'asc', 'on');">종료일</div>
+              <div class="result-th result-dday" data-target="dday" data-ignore="on" onclick="searchTodoWithOption(this, 'dday', 'desc', 'on');">D-DAY</div>
+            </div>
+            <div class="result-body">
+              <th:block th:replace="fragments/page/todoSearchResult"></th:block>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!--일정 입력 창 모달-->
+    <th:block th:replace="fragments/modal/todoAddForm"></th:block>
+    <!--색상 변경 모달-->
+    <th:block th:replace="fragments/modal/colorPicker"></th:block>
+  </div>
+</body>
+</html>

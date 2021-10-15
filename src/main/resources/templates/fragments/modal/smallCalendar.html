@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html xmlns:th="http://thymeleaf.org">
+<body>
+  <div th:fragment="smallCalendarWrap(sCalType)"
+      th:class="'small-calendar-wrap' + ((${sCalType} eq 'main') ? ' small-calendar-main' : ((${sCalType} eq 'right') ? ' small-calendar-right' : ''))">
+    <div class="small-year-month">
+      <div class="s-year-month">
+        <span class="s-year"></span><span class="s-month"></span>
+      </div>
+      <div class="s-year-month-select">
+        <div class="s-year-select">
+          <div class="s-y-select"></div>
+        </div>
+        <div class="s-month-select">
+          <div class="s-m-select"></div>
+        </div>
+      </div>
+    </div>
+    <div class="small-days">
+      <div class="s-days-title">
+        <span class="s-d-t">일</span>
+        <span class="s-d-t">월</span>
+        <span class="s-d-t">화</span>
+        <span class="s-d-t">수</span>
+        <span class="s-d-t">목</span>
+        <span class="s-d-t">금</span>
+        <span class="s-d-t">토</span>
+      </div>
+      <div class="s-days-day" th:each="i : ${#numbers.sequence(0, 5)}">
+        <span class="s-d-d"></span>
+        <span class="s-d-d"></span>
+        <span class="s-d-d"></span>
+        <span class="s-d-d"></span>
+        <span class="s-d-d"></span>
+        <span class="s-d-d"></span>
+        <span class="s-d-d"></span>
+      </div>
+      <div class="s-days-btn" th:if="${sCalType} eq 'main'">
+        <div class="s-d-confirm">확인</div><div class="s-d-cancel">취소</div>
+      </div>
+    </div>
+  </div>
+</body>
+</html>

@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+  <title>ERROR : [[${status}]]</title>
+  <style>
+    #error-wrap {width: 650px; height: 300px; margin: 50px auto; padding: 5px;}
+
+    #error-info {text-align: center; margin-bottom: 20px;}
+
+    #redirect {text-align: center;}
+
+    button {width: 150px; height: 40px; border: none; font-size:1.25em; background-color: coral; font-weight: 700;}
+    button:hover {cursor: pointer; opacity: .8;}
+  </style>
+
+</head>
+<body>
+  <div id="error-wrap">
+    <div id="error-info">
+      <span>[[${timestamp}]]</span><br/><br/>
+      <span>잘못된 요청입니다. 에러 코드 : [[${status}]]</span>
+    </div>
+    <div id="redirect">
+      <a target="_self" href="http://todo.develop-ing.site"><button>메인페이지</button></a>
+      &nbsp;&nbsp;&nbsp;
+      <a target="_self" href="http://todo.develop-ing.site/calendar/cal"><button>일정관리</button></a>
+    </div>
+  </div>
+</body>
+</html>

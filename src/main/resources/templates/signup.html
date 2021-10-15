@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html xmlns:th="http://thymeleaf.org/">
+<head>
+  <title>회원가입</title>
+  <link rel="stylesheet" type="text/css" th:href="@{/static/css/whole.css}"/>
+  <script type="text/javascript" th:src="@{/static/js/signup.js}" defer></script>
+</head>
+<body th:with="contextPath = ${#request.contextPath}">
+  <div id="wrap">
+    <div id="main-wrap">
+      <form id="signup-form" th:action="@{/member/signupProcess}" method="post">
+        <div id="home"><a th:href="@{/}">홈</a></div>
+        <div id="signup-area">
+          <input id="id" name="id" type="text" maxlength="20" placeholder="아이디" th:value="${overlapId} ? ${overlapId} : ''" autofocus/>
+          <div id="err-id" th:style="${signupFailOverlapId} ? 'display: block;' : ''" th:text="${signupFailOverlapId} ? ${signupFailOverlapId} : ''"></div>
+          <input id="pw" name="pw" type="password" maxlength="20" placeholder="비밀번호"/>
+          <div id="err-pw"></div>
+          <input id="pw2" name="pw2" type="password" maxlength="20" placeholder="비밀번호 확인"/>
+          <div id="err-pw2"></div>
+          <input id="signup-submit-btn" type="submit" value="회원가입"/>
+        </div>
+      </form>
+    </div>
+  </div>
+</body>
+</html>

@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html xmlns:th="http://thymeleaf.org">
+
+<body>
+  <div id="main-left">
+    <div class="calendar-wrap">
+      <div class="today">TODAY
+        <a th:href="|/calendar/cal?date=${#temporals.format(#temporals.createDate(sysDate, 'yyyy-M-d'), 'yyyy-M-d')}|"
+            th:text="${#temporals.createDate(sysDate, 'yyyy-M-d')}"></a>
+      </div>
+      <div class="calendar">
+        <div id="year-month">
+          <div class="year-month prev-year-month">
+            <a class="year-month-text" th:href="|/calendar/cal?date=${prevYear}-${prevMonth}-1|">&lt;</a>
+          </div>
+          <div class="year-month current-year-month">
+            <span class="year-month-text curr-year-month" th:text="|${currentYear}.${currentMonth < 10 ? '0'+currentMonth : currentMonth}|"></span>
+            <!--small-calendar-->
+            <th:block th:replace="fragments/modal/smallCalendar :: smallCalendarWrap('main')"></th:block>
+          </div>
+          <div class="year-month next-year-month">
+            <a class="year-month-text" th:href="|/calendar/cal?date=${nextYear}-${nextMonth}-1|">&gt;</a>
+          </div>
+        </div>
+      </div>
+      <div th:each="i : ${#numbers.sequence(0, 5)}" class="week">
+        <div class="day"
+              th:classappend="${status eq 0 and day eq currentDay} ? 'day-selected'"
+              th:attrappend="onclick=${onclick} ? ${onclick}"
+              th:each="j : ${#numbers.sequence(0, 6)}"
+              th:with="d=${date[i][j]}, fd=${fullDate[i][j]}, status=${status[i][j]}, day=${days[i][j]}, onclick=${onclick[i][j]}">
+          <div class="day-head"></div>
+          <div class="day-title">
+            <span class="day-title-span" th:classappend="${status} ne '0' ? ' day-title-prev-next'" th:text="${day}"></span>
+            <span th:if="${todoExtraMap.get(d)}" class="extra-todo" th:text="|+${todoExtraMap.get(d)}|"></span>
+          </div>
+          <th:block th:each="todo : ${todoList}" th:if="${todo.barLevel} ne 0"
+                    th:with="radius=${fd eq todo.beginDate and fd eq todo.dueDate} ? 'both' :
+                                    (${fd eq todo.beginDate} ? 'left' :
+                                    (${fd eq todo.dueDate} ? 'right' : 
+                                    (${fd gt todo.beginDate and fd lt todo.dueDate} ? 'none': '')))">
+            <div th:if="${radius ne ''}"
+                  th:style="|background-color: ${todo.color};|"
+                  th:data-no="${todo.no}"
+                  th:class="${fd eq todo.beginDate and fd eq todo.dueDate} ? |day-bar lv${todo.barLevel} both-radius| :
+                            (${fd eq todo.beginDate} ? |day-bar lv${todo.barLevel} left-radius| :
+                            (${fd eq todo.dueDate} ? |day-bar lv${todo.barLevel} right-radius| : 
+                            (${fd gt todo.beginDate and fd lt todo.dueDate} ? |day-bar lv${todo.barLevel}| : '')))"></div>
+          </th:block>
+        </div>
+      </div>
+    </div>
+    <div class="day-bar-brief">
+      <div th:each="brief : ${todoList4Brief}" id="bar-brief-" th:attrappend="id=${brief.no}">
+        <span class="brief-title" th:title="${brief.title}" th:text="${brief.title}"></span>
+        <div class="brief-close">
+          <img class="brief-close-btn" th:src="@{/static/images/close-black.svg}"/>
+        </div>
+        <span class="brief-date" th:text="|${brief.beginDate} ~ ${brief.dueDate}|"></span>
+        <span class="brief-dday" th:text="${brief.dDay} == -1 ? '' : 'D-' + (${brief.dDay} == 0 ? 'DAY' : ${brief.dDay})"></span>
+      </div>
+    </div>
+    <input id="current-year" type="hidden" th:value="${currentYear}"/>
+    <input id="current-month" type="hidden" th:value="${currentMonth}"/>
+    <input id="current-day" type="hidden" th:value="${currentDay}"/>
+  </div>
+</body>
+</html>

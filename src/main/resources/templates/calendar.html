@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html xmlns:th="http://thymeleaf.org">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>[[${selectedDate}]]</title>
+  <link rel="stylesheet" type="text/css" th:href="@{/static/css/whole.css}">
+  <script type="text/javascript" th:src="@{/static/js/global-fnc.js}" defer></script>
+  <script type="text/javascript" th:src="@{/static/js/calendar.js}" defer></script>
+  <script type="text/javascript" th:src="@{/static/js/binding.js}" defer></script>
+</head>
+<body>
+  <div id="wrap">
+    <div id="main-wrap">
+      <th:block th:replace="fragments/mycalendar"></th:block>
+      <th:block th:replace="fragments/mainRight"></th:block>
+    </div>
+  </div>
+</body>
+</html>

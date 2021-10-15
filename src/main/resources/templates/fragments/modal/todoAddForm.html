@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html xmlns:th="http://thymeleaf.org">
+<body>
+  <div class="todo-add-bg"></div>
+  <div class="todo-add-wrap">
+    <div class="todo-form">
+      <form id="todo-add-form" class="todo-add-form">
+        <!--small-calendar-->
+        <th:block th:replace="fragments/modal/smallCalendar :: smallCalendarWrap('right')"/>
+        <input class="NTT" type="text" name="title" placeholder="제목" maxlength="30"/>
+        <input class="todo-add-color" type="text" readonly/>
+        <input type="hidden" name="color"/>
+        <textarea class="todo-add-ta" name="content"></textarea>
+        <div class="todo-date-li">
+          <input class="todo-date-input-b" data-date-type="begin" type="text" name="beginDate" maxlength="10" readonly placeholder="시작"/>
+          &nbsp;&nbsp;-&nbsp;&nbsp;
+          <input class="todo-date-input-e" data-date-type="end" type="text" name="dueDate" maxlength="10" readonly placeholder="종료"/>
+        </div>
+        <input class="todo-add-submit" type="submit" value="등록하기"/>
+        <input class="todo-modify-submit" type="submit" value="수정하기"/>
+      </form>
+      <div class="todo-add-cancel"><img alt="닫기" th:src="@{/static/images/close-black.svg}"></div>
+    </div>    
+  </div>
+</body>
+</html>

@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="ko"
+      xmlns:th="http://thymeleaf.org"
+      xmlns:sec="http://thymleaf.org/extras/spring-security">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>캘린더형 일정관리 사이트</title>
+  <link rel="stylesheet" type="text/css" th:href="@{/static/css/whole.css}"/>
+  <script type="text/javascript" th:src="@{/static/js/home.js}" defer></script>
+</head>
+<body>
+  <div id="wrap">
+    <div id="main-wrap">
+      <div id="main-form">
+        <div id="welcome">
+          <h3 id="welcome-title">캘린더형 일정관리 사이트</h3>
+        </div>
+        <form sec:authorize="isAnonymous()" id="login-form" th:action="@{/login}" method="post">
+          <div id="login-area">
+            <div id="id-area" class="input-area">
+              <input id="id" name="id" type="text" placeholder="아이디" autofocus/>
+            </div>
+            <div id="err-empty-id"></div>
+            <div id="pw-area" class="input-area">
+              <input id="pw" name="password" type="password" placeholder="비밀번호"/>
+            </div>
+            <div id="err-empty-pw"></div>
+            <div id="login-fail" th:attrappend="style=${loginFailMsg} eq null ? 'display: none;'" th:text="${loginFailMsg}"></div>
+            <input id="login-submit-btn" type="submit" value="로그인"/>
+            <div id="extra-service"><label><input type="checkbox" name="keep-login" value="1">로그인 유지</label>&nbsp;&nbsp;<a th:href="@{/member/signup}">회원가입</a></div>
+          </div>
+        </form>
+        <div th:if="${thanksMsg}" id="thanks-msg">
+          <span th:text="${thanksMsg}"></span>
+        </div>
+        <div th:if="${signupSuccessMsg}" id="signup-success">
+          <span th:text="${signupSuccessMsg}"></span>
+        </div>
+        <form sec:authorize="isAuthenticated()" id="logout-form"  th:action="@{/logout}" method="post">
+          <span>서비스가 도움이 되었길 바랍니다.</span>
+          <button><a th:href="@{/calendar/cal}">일정관리</a></button>
+          <input id="logout-submit-btn" type="submit" value="로그아웃"/>
+        </form>
+        <div style="text-align: center;">
+          <img id="welcome-img" th:src="@{/static/images/main-calendar.jpg}"/>
+        </div>
+      </div>
+    </div>
+  </div>
+</body>
+</html>
