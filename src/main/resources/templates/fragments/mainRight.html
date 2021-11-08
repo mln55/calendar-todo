@@ -6,21 +6,20 @@
       <form id="logout-form" th:action="@{/logout}" method="post">
         <input id="logout-submit-btn" type="submit" value="로그아웃"/>
       </form>
-      <div class="target-date"><span class="target-date-span" th:text="${#temporals.createDate(selectedDate, 'yyyy-M-d')}"></span></div>
+      <div class="target-date"><span class="target-date-span" th:text="${inputDate}"></span></div>
       <div class="todo-add-btn"><span>일정추가</span></div>
       <div id="right-content-option">
         <span id="option-displayed" onclick="optionClick(this);">일정</span>
       </div>
       <div id="right-content-wrap">
         <div id="content-target-date"
-            th:with="currentDate = |${currentYear}-${currentMonth < 10 ? '0'.concat(currentMonth) : currentMonth
-            }-${currentDay < 10 ? '0'.concat(currentDay) : currentDay}|">
+            th:with="currentDate = ${#temporals.create(currentYear, currentMonth, currentDay)}">
           <div th:unless="${hasTodoList}">
             <span>등록된 일정이 없습니다.</span>
           </div>
           <div th:if="${hasTodoList}">
             <div th:each="todo, stat : ${todoList}"
-                th:if="${todo.beginDate} le ${currentDate} and ${todo.dueDate} ge ${currentDate}"
+                th:if="${todo.beginDate le currentDate and todo.dueDate ge currentDate}"
                 class="date-todo">
               <div class="todo-title">
                 <div class="todo-label-div">

@@ -145,7 +145,8 @@ input[type="checkbox"] {width: 20px; height: 20px; vertical-align: middle;}
   border-top: 4px solid tomato;
   display: none;
 }
-.week .day:first-child {border-left: 1px solid black; color: red;}
+.day:first-child {border-left: 1px solid black;}
+.day:first-child, .day:last-child {color: red;}
 .day-title {
   height: 40px;
   line-height: 40px;
@@ -495,7 +496,7 @@ input[type="checkbox"] {width: 20px; height: 20px; vertical-align: middle;}
 
   /* todoSearchResult.html 포함 */
 #todo-search-result {
-  font-size: 16px;
+  font-size: 15px;
 }
 .result-tr {
   display: flex;

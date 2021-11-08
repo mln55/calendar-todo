@@ -39,4 +39,5 @@ out/
 ### custom ###
 Dockerfile
 src/**/*.properties
+src/**/*.yml
 src/**/mapper/

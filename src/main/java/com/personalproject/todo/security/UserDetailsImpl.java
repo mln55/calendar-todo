@@ -1,17 +1,19 @@
 package com.personalproject.todo.security;
 
-import com.personalproject.todo.vo.Member;
-import org.springframework.security.core.GrantedAuthority;
-import org.springframework.security.core.authority.SimpleGrantedAuthority;
-import org.springframework.security.core.userdetails.UserDetails;
-
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 
+import com.personalproject.todo.member.Auth;
+import com.personalproject.todo.member.Member;
+
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
+import org.springframework.security.core.userdetails.UserDetails;
+
 public class UserDetailsImpl implements UserDetails {
 
-    private Member member;
+    private final Member member;
 
     public UserDetailsImpl(Member member) {
         this.member = member;
@@ -20,20 +22,8 @@ public class UserDetailsImpl implements UserDetails {
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
 
-        String auth = member.getAuth();
-        String role = "ROLE_ANONYMOUS";
-
-        switch (auth) {
-            case "none":
-                role = "ROLE_USER";
-                break;
-            case "email auth":
-                role = "ROLE_MEMBER";
-                break;
-            case "all auth":
-                role = "ROLE_ADMIN";
-                break;
-        }
+        Auth auth = member.getAuth();
+        String role = auth == null ? "ROLE_ANONYMOUS" : auth.value();
 
         List<GrantedAuthority> authorities = new ArrayList<>();
         authorities.add(new SimpleGrantedAuthority(role));

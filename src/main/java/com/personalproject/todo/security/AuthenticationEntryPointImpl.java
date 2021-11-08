@@ -16,7 +16,6 @@ public class AuthenticationEntryPointImpl implements AuthenticationEntryPoint {
 
         response.setStatus(HttpStatus.UNAUTHORIZED.value());
         response.setContentType("text/html; charset=utf8");
-        // response.getWriter().print("<script>alert('로그인이 필요한 서비스입니다.'); location.href='http://todo.develop-ing.site/';</script>");
         response.getWriter().print("<script>alert('로그인이 필요한 서비스입니다.'); location.href='/';</script>");
     }
 

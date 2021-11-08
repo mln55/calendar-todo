@@ -5,21 +5,21 @@
   <div id="main-left">
     <div class="calendar-wrap">
       <div class="today">TODAY
-        <a th:href="|/calendar/cal?date=${#temporals.format(#temporals.createDate(sysDate, 'yyyy-M-d'), 'yyyy-M-d')}|"
-            th:text="${#temporals.createDate(sysDate, 'yyyy-M-d')}"></a>
+        <a th:href="|/calendar/cal?date=${sysDate}|"
+            th:text="${sysDate}"></a>
       </div>
       <div class="calendar">
         <div id="year-month">
           <div class="year-month prev-year-month">
-            <a class="year-month-text" th:href="|/calendar/cal?date=${prevYear}-${prevMonth}-1|">&lt;</a>
+            <a class="year-month-text" th:href="|/calendar/cal?date=${#temporals.create(prevYear, prevMonth, 1)}|">&lt;</a>
           </div>
           <div class="year-month current-year-month">
-            <span class="year-month-text curr-year-month" th:text="|${currentYear}.${currentMonth < 10 ? '0'+currentMonth : currentMonth}|"></span>
+            <span class="year-month-text curr-year-month" th:text="|${currentYear}.${currentMonth lt 10 ? '0'+currentMonth : currentMonth}|"></span>
             <!--small-calendar-->
             <th:block th:replace="fragments/modal/smallCalendar :: smallCalendarWrap('main')"></th:block>
           </div>
           <div class="year-month next-year-month">
-            <a class="year-month-text" th:href="|/calendar/cal?date=${nextYear}-${nextMonth}-1|">&gt;</a>
+            <a class="year-month-text" th:href="|/calendar/cal?date=${#temporals.create(nextYear, nextMonth, 1)}|">&gt;</a>
           </div>
         </div>
       </div>
@@ -28,24 +28,25 @@
               th:classappend="${status eq 0 and day eq currentDay} ? 'day-selected'"
               th:attrappend="onclick=${onclick} ? ${onclick}"
               th:each="j : ${#numbers.sequence(0, 6)}"
-              th:with="d=${date[i][j]}, fd=${fullDate[i][j]}, status=${status[i][j]}, day=${days[i][j]}, onclick=${onclick[i][j]}">
+              th:with="d=${date[i][j]}, status=${status[i][j]}, day=${days[i][j]}, onclick=${onclick[i][j]}">
           <div class="day-head"></div>
           <div class="day-title">
-            <span class="day-title-span" th:classappend="${status} ne '0' ? ' day-title-prev-next'" th:text="${day}"></span>
+            <span class="day-title-span" th:classappend="${status} ne '0' ? 'day-title-prev-next'" th:text="${day}"></span>
             <span th:if="${todoExtraMap.get(d)}" class="extra-todo" th:text="|+${todoExtraMap.get(d)}|"></span>
           </div>
           <th:block th:each="todo : ${todoList}" th:if="${todo.barLevel} ne 0"
-                    th:with="radius=${fd eq todo.beginDate and fd eq todo.dueDate} ? 'both' :
-                                    (${fd eq todo.beginDate} ? 'left' :
-                                    (${fd eq todo.dueDate} ? 'right' : 
-                                    (${fd gt todo.beginDate and fd lt todo.dueDate} ? 'none': '')))">
+                    th:with="beginDate=${todo.beginDate.toString()}, dueDate=${todo.dueDate.toString()}
+                            ,radius=${d eq beginDate and d eq dueDate} ? 'both' :
+                                    (${d eq beginDate} ? 'left' :
+                                    (${d eq dueDate} ? 'right' : 
+                                    (${d gt beginDate and d lt dueDate} ? 'none': '')))">
             <div th:if="${radius ne ''}"
                   th:style="|background-color: ${todo.color};|"
                   th:data-no="${todo.no}"
-                  th:class="${fd eq todo.beginDate and fd eq todo.dueDate} ? |day-bar lv${todo.barLevel} both-radius| :
-                            (${fd eq todo.beginDate} ? |day-bar lv${todo.barLevel} left-radius| :
-                            (${fd eq todo.dueDate} ? |day-bar lv${todo.barLevel} right-radius| : 
-                            (${fd gt todo.beginDate and fd lt todo.dueDate} ? |day-bar lv${todo.barLevel}| : '')))"></div>
+                  th:class="${d eq beginDate and d eq dueDate} ? |day-bar lv${todo.barLevel} both-radius| :
+                            (${d eq beginDate} ? |day-bar lv${todo.barLevel} left-radius| :
+                            (${d eq dueDate} ? |day-bar lv${todo.barLevel} right-radius| : 
+                            (${d gt beginDate and d lt dueDate} ? |day-bar lv${todo.barLevel}| : '')))"></div>
           </th:block>
         </div>
       </div>
