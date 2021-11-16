@@ -46,7 +46,10 @@ public class TodoService {
             currTodoBegin = LocalDate.from(todoDto.getBeginDate()).atTime(todoDto.getBeginTime());
             currTodoDue = LocalDate.from(todoDto.getDueDate()).atTime(todoDto.getDueTime());
 
-            if (!hasTodoList && currTodoBegin.isBefore(currentDateTime) && currTodoDue.isAfter(currentDateTime)) {
+            if (!hasTodoList
+                && (currTodoBegin.isBefore(currentDateTime) || currTodoBegin.isEqual(currentDateTime))
+                && (currTodoDue.isAfter(currentDateTime) || currTodoDue.isEqual(currentDateTime))
+            ) {
                 hasTodoList = true;
             }
 
