@@ -1,6 +1,6 @@
 # 캘린더형 일정관리 사이트
 
-### [http://todo-develop-ing.site](http://todo.develop-ing.site)
+### [http://todo.firmpeach.net](http://todo.firmpeach.net)
 ### 개발 기간 : 2020.09 ~
 ### 규&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 모 : 개인
 ### 사용 기술 :
@@ -18,17 +18,17 @@
 todo                            todo
 ├── TodoApplication.java        ├── TodoApplication.java
 ├── configuration               ├── calendar
-│   └──                         │   └── 
+│   └──                         │   └──
 ├── controller                  ├── configuration
-│   └──                         │   └── 
+│   └──                         │   └──
 ├── dao                         ├── member
-│   └──                         │   └── 
+│   └──                         │   └──
 ├── security                    ├── security
-│   └──                         │   └── 
+│   └──                         │   └──
 ├── service                     ├── todo
-│   └──                         │   └── 
+│   └──                         │   └──
 └── vo                          └── utils
-    └──                             └── 
+    └──                             └──
 </pre>
 2. vo와 dto 분리
 3. DI 필드 주입에서 생성자 주입으로 변경
